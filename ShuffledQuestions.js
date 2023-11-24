@@ -1,3 +1,4 @@
+// Store all questions of a specific category
 class ShuffledQuestions{
     constructor(){
         this.questions = []
@@ -38,10 +39,10 @@ class ShuffledQuestions{
         }
 
         let take = Infinity;
-        let notTake = getMinimumErrorMarks(i + 1, marks, dp);
+        let notTake = this.getMinimumErrorMarks(i + 1, marks, dp);
 
         if (marks >= this.questions[i].marks){
-            take = getMinimumErrorMarks(i + 1, marks - this.questions[i].marks, dp);
+            take = this.getMinimumErrorMarks(i + 1, marks - this.questions[i].marks, dp);
         }
 
         dp[i][marks] = Math.min(take, notTake);
@@ -71,21 +72,21 @@ class ShuffledQuestions{
             return;
         }
 
-        if (col >= this.questions[row]){
+        if (col >= this.questions[row].marks){
             if (row === n - 1 || dp[row + 1][col - this.questions[row].marks] <= dp[row + 1][col]){
                 curSequence.push(this.questions[row]);
-                generateQuestionSequence(row + 1, col - this.questions[row].marks, curSequence, allSequences, dp);
+                this.generateQuestionSequence(row + 1, col - this.questions[row].marks, curSequence, allSequences, dp);
                 curSequence.pop();
                 return;
             }
 
             if (row < n - 1 && dp[row + 1][col - this.questions[row].marks] >= dp[row + 1][col]){
-                generateQuestionSequence(row + 1, col, curSequence, allSequences, dp);
+                this.generateQuestionSequence(row + 1, col, curSequence, allSequences, dp);
                 return;
             }
         } 
         else{
-            generateQuestionSequence(row + 1, col, curSequence, allSequences, dp);
+            this.generateQuestionSequence(row + 1, col, curSequence, allSequences, dp);
             return;
         }
     }
