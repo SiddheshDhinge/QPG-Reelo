@@ -1,9 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const { insertQuery } = require("./queries");
-const { db, prepareSchema, loadDB } = require("./DB");
-const RandomList = require("./RandomList");
+const ShuffledQuestions = require("./ShuffledQuestions");
 
 const port = 3000;
 const app = express();
@@ -11,26 +9,35 @@ app.use(express.json());
 app.use(cors());
 
 
-const filters = {
-    "LOW" : new RandomList(),
-    "MID" : new RandomList(),
-    "HIGH" : new RandomList(),
+const categories = {
+    "LOW" : new ShuffledQuestions(),
+    "MID" : new ShuffledQuestions(),
+    "HIGH" : new ShuffledQuestions(),
 }
 
-app.post("/t", (req, res) => {
+app.get("/test", (req, res) => {
+    marks = 17;
+    sq = new ShuffledQuestions();
+    sq.addQuestion({marks: 2, id: 1});
+    sq.addQuestion({marks: 4, id: 2});
+    sq.addQuestion({marks: 6, id: 3});
+    sq.addQuestion({marks: 8, id: 4});
+    sq.addQuestion({marks: 10, id: 5});
 
+    const [sequence, assigned] = sq.getQuestionsOfMarks(marks);
+    const remMarks = marks - assigned;
+
+    console.log(JSON.stringify(sequence));
+    console.log("Fit:", assigned);
+    console.log("remaining:", remMarks);
+
+    res.status(200);
+    res.send("Test GET")
 });
 
 // Get A QP
 app.get("/", (req, res) => {
-    db.all("SELECT * FROM Question", (err, rows) => {
-        if (err) {
-            console.error(err.message);
-        }
-        else{
-            res.send(rows);
-        }
-    });
+    res.send("GET");
 });
 
 // Add A question to DB
@@ -43,11 +50,9 @@ app.post("/", (req, res) => {
         return;
     }
 
-    db.run(insertQuery, [questionName, subject, topic, difficulty, marks]);
     res.send("POST");
 });
 
 app.listen(port, () => {
-    prepareSchema();
     console.log(`Server is running at http://localhost:${port}`);
 });
