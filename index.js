@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const ShuffledQuestions = require("./ShuffledQuestions");
+const { validateAddQuestion } = require("./validator");
 
 const port = 3000;
 const app = express();
@@ -10,14 +11,20 @@ app.use(cors());
 
 
 const categories = {
-    "LOW" : new ShuffledQuestions(),
-    "MID" : new ShuffledQuestions(),
-    "HIGH" : new ShuffledQuestions(),
-}
+    // categories are currently used like below-
+    // "EASY" : new ShuffledQuestions(),
+    // "MEDIUM" : new ShuffledQuestions(),
+    // "HARD" : new ShuffledQuestions(),
+
+    // if new filter categories like topic is needed it could be done by this way-
+    /* "LOW" : {
+        "DATA": new ShuffledQuestions()
+    } */
+};
 
 app.get("/test", (req, res) => {
     marks = 17;
-    sq = new ShuffledQuestions();
+    sq = categories["EASY"];
     sq.addQuestion({marks: 2, id: 1});
     sq.addQuestion({marks: 4, id: 2});
     sq.addQuestion({marks: 6, id: 3});
@@ -35,22 +42,43 @@ app.get("/test", (req, res) => {
     res.send("Test GET")
 });
 
-// Get A QP
+
+// Get a randomized Question Paper satisyfing criteria
 app.get("/", (req, res) => {
     res.send("GET");
 });
 
-// Add A question to DB
+
+// Add A question to respective category
 app.post("/", (req, res) => {
     const {questionName, subject, topic, difficulty, marks} = req.body;
-    if(!questionName || !subject || !topic || !difficulty || !marks)
+
+    const questionObj = {
+        questionName,
+        subject,
+        topic,
+        difficulty,
+        marks
+    }
+    
+    const validation = validateAddQuestion(questionObj)
+
+    if(validation[0] === true)
     {
-        res.status(400);
-        res.send("Insufficient data");
+        // error in posted data
+        res.status(validation[1]);
+        res.send(validation[2]);
         return;
     }
 
-    res.send("POST");
+    if (!(questionObj.difficulty in categories)) {
+        categories[questionObj.difficulty] = new ShuffledQuestions();
+    }
+    
+    categories[questionObj.difficulty].addQuestion(questionObj);
+
+    res.status(200);
+    res.send("Success");
 });
 
 app.listen(port, () => {
