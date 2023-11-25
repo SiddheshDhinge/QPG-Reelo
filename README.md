@@ -20,6 +20,17 @@ npm ci
 
 ## Usage
 
+### Running Tests
+
+To run tests, execute the following command:
+
+```bash
+npm test
+```
+
+This will run tests using Mocha.
+
+
 ### Starting the Application
 
 To start the application, run the following command:
@@ -30,6 +41,8 @@ npm run start
 
 This will run the application using `node index.js`.
 
+#### Once tests has passed and application has started an example has been created at /example endpoint.
+
 ### Development Mode
 
 For development purposes, you can use `nodemon` to automatically restart the server on file changes (Make sure you have nodemon installed globally). Run the following command:
@@ -37,13 +50,3 @@ For development purposes, you can use `nodemon` to automatically restart the ser
 ```bash
 npm run dev
 ```
-
-### Running Tests
-
-To run tests, execute the following command:
-
-```bash
-npm test
-```
-
-This will run tests using Mocha.
