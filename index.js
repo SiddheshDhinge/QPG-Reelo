@@ -22,24 +22,106 @@ const categories = {
     } */
 };
 
-app.get("/test", (req, res) => {
+app.get("/example", (req, res) => {
     marks = 17;
-    sq = categories["EASY"];
-    sq.addQuestion({marks: 2, id: 1});
-    sq.addQuestion({marks: 4, id: 2});
-    sq.addQuestion({marks: 6, id: 3});
-    sq.addQuestion({marks: 8, id: 4});
-    sq.addQuestion({marks: 10, id: 5});
+    sq = new ShuffledQuestions();
+
+    sq.addQuestion({
+        questionName: "Question 1",
+        subject: "Math",
+        topic: "Algebra",
+        difficulty: "Easy",
+        marks: 2
+    });
+
+    sq.addQuestion({
+        questionName: "Question 2",
+        subject: "History",
+        topic: "World War II",
+        difficulty: "Medium",
+        marks: 4
+    });
+
+    sq.addQuestion({
+        questionName: "Question 3",
+        subject: "Physics",
+        topic: "Optics",
+        difficulty: "Hard",
+        marks: 6
+    });
+
+    sq.addQuestion({
+        questionName: "Question 4",
+        subject: "Computer Science",
+        topic: "Programming",
+        difficulty: "Medium",
+        marks: 8
+    });
+
+    sq.addQuestion({
+        questionName: "Question 5",
+        subject: "Chemistry",
+        topic: "Organic Chemistry",
+        difficulty: "Hard",
+        marks: 10
+    });
+
+    sq.addQuestion({
+        questionName: "Question 6",
+        subject: "Literature",
+        topic: "Poetry",
+        difficulty: "Easy",
+        marks: 2
+    });
+
+    sq.addQuestion({
+        questionName: "Question 7",
+        subject: "Geography",
+        topic: "Countries and Capitals",
+        difficulty: "Medium",
+        marks: 4
+    });
+
+    sq.addQuestion({
+        questionName: "Question 8",
+        subject: "Economics",
+        topic: "Microeconomics",
+        difficulty: "Hard",
+        marks: 6
+    });
+
+    sq.addQuestion({
+        questionName: "Question 9",
+        subject: "Biology",
+        topic: "Genetics",
+        difficulty: "Medium",
+        marks: 8
+    });
+
+    sq.addQuestion({
+        questionName: "Question 10",
+        subject: "Art",
+        topic: "Renaissance Paintings",
+        difficulty: "Easy",
+        marks: 10
+    });
 
     const [sequence, assigned] = sq.getQuestionsOfMarks(marks);
     const remMarks = marks - assigned;
-
-    console.log(JSON.stringify(sequence));
+    console.log("----------------------------------------------------------------\n");
+    console.log("Suppose Questions of marks - (2, 4, 6, 8, 10, 2, 4, 6, 8, 10) in some XYZ difficulty category\n");
+    console.log("If we need to create a question paper with only this difficulty of 17 marks there are many ways\n");
+    console.log("So here everytime a question paper is genereated it will be of different questions but with same total marks\n");
+    
+    console.log(sequence);
     console.log("Fit:", assigned);
     console.log("remaining:", remMarks);
+    
+    console.log("--To crossverify refresh the page and check--\n");
+    console.log("----------------------------------------------------------------\n");
 
     res.status(200);
-    res.send("Test GET")
+    res.send("See Console")
 });
 
 
