@@ -22,6 +22,8 @@ const categories = {
     } */
 };
 
+
+// Example endpoint
 app.get("/example", (req, res) => {
     marks = 17;
     sq = new ShuffledQuestions();
