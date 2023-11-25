@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const ShuffledQuestions = require("./ShuffledQuestions");
-const { validateAddQuestion } = require("./validator");
+const { validateAddQuestion, validateGenerateQuestionPaper } = require("./validator");
 
 const port = 3000;
 const app = express();
@@ -45,6 +45,23 @@ app.get("/test", (req, res) => {
 
 // Get a randomized Question Paper satisyfing criteria
 app.get("/generateQuestionPaper", (req, res) => {
+    const {totalMarks, difficulty} = req.body;
+    const paperFormatObj = {
+        totalMarks,
+        difficulty
+    };
+    
+    const validation = validateGenerateQuestionPaper(paperFormatObj);
+
+    if(validation[0] === true)
+    {
+        // error in posted data
+        res.status(validation[1]);
+        res.send(validation[2]);
+        return;
+    }
+
+
     res.send("generateQuestionPaper GET");
 });
 
