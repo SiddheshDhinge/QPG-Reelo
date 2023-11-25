@@ -15,7 +15,6 @@ const validateAddQuestion = (questionObj) => {
     }
 
     questionObj.difficulty = questionObj.difficulty.toUpperCase();
-    console.log(questionObj);
     const validDifficulty = new Set(["EASY", "MEDIUM", "HARD"]);
 
     if((typeof questionObj.marks !== "number" || Number.isNaN(questionObj.marks)) || !validDifficulty.has(questionObj.difficulty))
@@ -71,7 +70,6 @@ const validateGenerateQuestionPaper = (paperFormatObj) => {
     
     for(let i=0; i<formatDifficulties.length; i++){
         const key = formatDifficulties[i];
-        console.log(key);
         paperFormatObj.difficulty[key.toUpperCase()] = paperFormatObj.difficulty[key];
         delete paperFormatObj.difficulty[key];
     }
@@ -87,11 +85,6 @@ const validateGenerateQuestionPaper = (paperFormatObj) => {
             typeof paperFormatObj.difficulty[formatDifficulties[i]] !== "number" || 
             Number.isNaN(paperFormatObj.difficulty[formatDifficulties[i]])
         ){
-            console.log(
-                !validDifficulty.has(formatDifficulties[i]),
-                typeof paperFormatObj.difficulty[formatDifficulties[i]] !== "number", 
-                Number.isNaN(paperFormatObj.difficulty[formatDifficulties[i]])
-            );
             err = [true, 400, "Bad data"];
             return err;
         }
@@ -105,7 +98,7 @@ const validateGenerateQuestionPaper = (paperFormatObj) => {
         return err;
     }
 
-    if(percentageSum !== paperFormatObj.totalMarks){
+    if(percentageSum !== 100){
         err = [true, 400, "Constraint not met - difficulties"];
         return err;
     }
@@ -116,6 +109,12 @@ const validateGenerateQuestionPaper = (paperFormatObj) => {
             err = [true, 400, "Constraints not met - difficulties"];
             return err;
         }
+    }
+    
+    for(let i=0; i<formatDifficulties.length; i++)
+    {
+        const percentage = paperFormatObj.difficulty[formatDifficulties[i]]; 
+        paperFormatObj.difficulty[formatDifficulties[i]] = (percentage / 100) * paperFormatObj.totalMarks;
     }
     
     return err;

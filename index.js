@@ -12,9 +12,9 @@ app.use(cors());
 
 const categories = {
     // categories are currently used like below-
-    // "EASY" : new ShuffledQuestions(),
-    // "MEDIUM" : new ShuffledQuestions(),
-    // "HARD" : new ShuffledQuestions(),
+    "EASY" : new ShuffledQuestions(),
+    "MEDIUM" : new ShuffledQuestions(),
+    "HARD" : new ShuffledQuestions(),
 
     // if new filter categories like topic is needed it could be done by this way-
     /* "LOW" : {
@@ -61,8 +61,23 @@ app.get("/generateQuestionPaper", (req, res) => {
         return;
     }
 
+    const difficulties = Object.keys(paperFormatObj.difficulty);
+    questionPaperObj = {}
 
-    res.send("generateQuestionPaper GET");
+    let unassignedMarks = 0;
+    for(let i=0; i<difficulties.length; i++)
+    {
+        const difficulty = difficulties[i];
+        const marks = paperFormatObj.difficulty[difficulty];
+        const [questionSequence, assignedMarks] = categories[difficulty].getQuestionsOfMarks(marks);
+        questionPaperObj[difficulty] = questionSequence;
+        unassignedMarks += (marks - assignedMarks);
+    }
+
+    questionPaperObj.unassignedMarks = unassignedMarks;
+    
+    res.status(200);
+    res.send(questionPaperObj);
 });
 
 
