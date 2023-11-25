@@ -32,7 +32,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 1",
         subject: "Math",
         topic: "Algebra",
-        difficulty: "Easy",
+        difficulty: "XYZ",
         marks: 2
     });
 
@@ -40,7 +40,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 2",
         subject: "History",
         topic: "World War II",
-        difficulty: "Medium",
+        difficulty: "XYZ",
         marks: 4
     });
 
@@ -48,7 +48,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 3",
         subject: "Physics",
         topic: "Optics",
-        difficulty: "Hard",
+        difficulty: "XYZ",
         marks: 6
     });
 
@@ -56,7 +56,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 4",
         subject: "Computer Science",
         topic: "Programming",
-        difficulty: "Medium",
+        difficulty: "XYZ",
         marks: 8
     });
 
@@ -64,7 +64,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 5",
         subject: "Chemistry",
         topic: "Organic Chemistry",
-        difficulty: "Hard",
+        difficulty: "XYZ",
         marks: 10
     });
 
@@ -72,7 +72,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 6",
         subject: "Literature",
         topic: "Poetry",
-        difficulty: "Easy",
+        difficulty: "XYZ",
         marks: 2
     });
 
@@ -80,7 +80,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 7",
         subject: "Geography",
         topic: "Countries and Capitals",
-        difficulty: "Medium",
+        difficulty: "XYZ",
         marks: 4
     });
 
@@ -88,7 +88,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 8",
         subject: "Economics",
         topic: "Microeconomics",
-        difficulty: "Hard",
+        difficulty: "XYZ",
         marks: 6
     });
 
@@ -96,7 +96,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 9",
         subject: "Biology",
         topic: "Genetics",
-        difficulty: "Medium",
+        difficulty: "XYZ",
         marks: 8
     });
 
@@ -104,7 +104,7 @@ app.get("/example", (req, res) => {
         questionName: "Question 10",
         subject: "Art",
         topic: "Renaissance Paintings",
-        difficulty: "Easy",
+        difficulty: "XYZ",
         marks: 10
     });
 
@@ -119,7 +119,7 @@ app.get("/example", (req, res) => {
     console.log("Fit:", assigned);
     console.log("remaining:", remMarks);
     
-    console.log("--To crossverify refresh the page and check--\n");
+    console.log("--Refresh page and check if Question paper changes ✌️--\n");
     console.log("----------------------------------------------------------------\n");
 
     res.status(200);
@@ -199,7 +199,7 @@ app.post("/addQuestion", (req, res) => {
 
 
 app.get("/", (req, res) => {
-    res.send(`Server is running at http://localhost:${port}`);
+    res.send(`Server is running at http://localhost:${port}. Run tests and see example at /example`);
 });
 
 
