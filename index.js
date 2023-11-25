@@ -44,13 +44,13 @@ app.get("/test", (req, res) => {
 
 
 // Get a randomized Question Paper satisyfing criteria
-app.get("/", (req, res) => {
-    res.send("GET");
+app.get("/generateQuestionPaper", (req, res) => {
+    res.send("generateQuestionPaper GET");
 });
 
 
 // Add A question to respective category
-app.post("/", (req, res) => {
+app.post("/addQuestion", (req, res) => {
     const {questionName, subject, topic, difficulty, marks} = req.body;
 
     const questionObj = {
@@ -80,6 +80,12 @@ app.post("/", (req, res) => {
     res.status(200);
     res.send("Success");
 });
+
+
+app.get("/", (req, res) => {
+    res.send(`Server is running at http://localhost:${port}`);
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
